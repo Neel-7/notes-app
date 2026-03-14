@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { subscribeToNotes } from "../store/notesSlice";
+import { subscribeToTags } from "../store/tagsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 export default function NotesProvider({
@@ -9,14 +10,17 @@ export default function NotesProvider({
 }) {
   const dispatch = useAppDispatch();
   const uid = useAppSelector((s) => s.auth.user?.uid);
-  const unsubRef = useRef<(() => void) | null>(null);
+  const unsubNotes = useRef<(() => void) | null>(null);
+  const unsubTags = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (uid) {
-      unsubRef.current = subscribeToNotes(uid, dispatch);
+      unsubNotes.current = subscribeToNotes(uid, dispatch);
+      unsubTags.current = subscribeToTags(uid, dispatch);
     }
     return () => {
-      unsubRef.current?.();
+      unsubNotes.current?.();
+      unsubTags.current?.();
     };
   }, [uid, dispatch]);
 

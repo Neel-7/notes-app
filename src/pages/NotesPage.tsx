@@ -2,9 +2,15 @@ import { useAppSelector } from "../store/hooks";
 
 export default function NotesPage() {
   const activeNoteId = useAppSelector((s) => s.notes.activeNoteId);
+  const allNotes = useAppSelector((s) => s.notes.items);
   const note = useAppSelector((s) =>
     s.notes.items.find((n) => n.id === activeNoteId),
   );
+
+  console.log("=== NotesPage ===");
+  console.log("activeNoteId:", activeNoteId);
+  console.log("allNotes:", allNotes);
+  console.log("note:", note);
 
   if (!activeNoteId || !note) {
     return (

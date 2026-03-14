@@ -16,11 +16,12 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
+import type { Block } from "@blocknote/core";
 
 export interface Note {
   id: string;
   title: string;
-  content: unknown[];
+  content: Block[];
   tags: string[];
   uid: string;
   createdAt: number;
